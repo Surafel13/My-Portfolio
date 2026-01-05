@@ -7,6 +7,47 @@
     --accent-secondary: #f107a3;
     --nav-bg: rgba(11, 11, 13, 0.8);
     --glass-border: rgba(255, 255, 255, 0.1);
+    --input-bg: #0b0b0d;
+    --section-alt-bg: #0f0f12;
+    --element-bg: #2a2a30;
+    --tag-bg: rgba(255, 255, 255, 0.05);
+    --icon-bg: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode {
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4b5563;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --input-bg: #ffffff;
+    --section-alt-bg: #e4e6eb;
+    --element-bg: #d1d5db;
+    --tag-bg: rgba(0, 0, 0, 0.05);
+    --icon-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: transform 0.3s ease, color 0.3s ease;
+    margin-left: 20px;
+}
+
+.theme-toggle:hover {
+    color: var(--accent-primary);
+    transform: rotate(15deg);
+}
+
+/* Update inputs to use variable */
+.input-group input,
+.input-group textarea {
+    background: var(--input-bg);
 }
 
 * {
@@ -319,7 +360,7 @@ a {
 /* About Section */
 .about {
     padding: 100px 0;
-    background: #0f0f12;
+    background: var(--section-alt-bg);
 }
 
 .about-content {
@@ -366,7 +407,7 @@ a {
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: #2a2a30;
+    background: var(--element-bg);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -445,7 +486,7 @@ a {
 .btn-icon {
     width: 45px;
     height: 45px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--icon-bg);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -479,7 +520,7 @@ a {
 .tags span {
     font-size: 0.85rem;
     padding: 5px 12px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--tag-bg);
     border-radius: 20px;
     color: var(--text-secondary);
 }
@@ -487,7 +528,7 @@ a {
 /* Experience Section */
 .experience {
     padding: 100px 0;
-    background: #0f0f12;
+    background: var(--section-alt-bg);
 }
 
 .timeline {
@@ -503,7 +544,7 @@ a {
     top: 0;
     height: 100%;
     width: 2px;
-    background: #2a2a30;
+    background: var(--element-bg);
 }
 
 .timeline-item {
@@ -588,7 +629,7 @@ a {
 .social-links a {
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--icon-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -609,7 +650,7 @@ a {
 .input-group textarea {
     width: 100%;
     padding: 15px;
-    background: #0b0b0d;
+    background: var(--input-bg);
     border: 1px solid #2a2a30;
     border-radius: 10px;
     color: var(--text-primary);

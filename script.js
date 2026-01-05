@@ -1,7 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Register GSAP Plugins
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+
+    // Check for saved user preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            localStorage.setItem('theme', 'dark');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    });
 
     // Custom Cursor
     const cursorDot = document.querySelector(".cursor-dot");
@@ -23,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             duration: 0.15,
             ease: "power2.out"
         });
-        
+
         // Also update dot with GSAP for consistency if mixed
         gsap.to(cursorDot, {
             x: posX,
@@ -72,11 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const tl = gsap.timeline();
 
     tl.to(".greeting", { opacity: 1, y: 0, duration: 0.8, delay: 0.2 })
-      .to(".name", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-      .to(".title", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-      .to(".description", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-      .to(".cta-button", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-      .to(".scroll-down", { opacity: 1, duration: 1 }, "-=0.2");
+        .to(".name", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to(".title", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to(".description", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to(".cta-button", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to(".scroll-down", { opacity: 1, duration: 1 }, "-=0.2");
 
     // Floating Shapes Animation
     gsap.to(".shape-1", {
@@ -87,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         yoyo: true,
         ease: "sine.inOut"
     });
-    
+
     gsap.to(".shape-2", {
         x: -30,
         y: -40,
@@ -98,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Scroll Animations
-    
+
     // About Section
     gsap.from(".about-image", {
         scrollTrigger: {
@@ -188,10 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            if(targetId === "#") return;
+            if (targetId === "#") return;
             const target = document.querySelector(targetId);
-            if(target) {
-                gsap.to(window, {duration: 1, scrollTo: {y: target, offsetY: 70}});
+            if (target) {
+                gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 70 } });
             }
         });
     });
