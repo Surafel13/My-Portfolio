@@ -307,4 +307,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Contact Form Submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch("https://formsubmit.co/ajax/tesfayesurafel18@gmail.com", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    submitBtn.textContent = 'Message Sent!';
+                    submitBtn.style.background = '#28a745'; // Green for success
+                    contactForm.reset();
+                    setTimeout(() => {
+                        submitBtn.textContent = originalBtnText;
+                        submitBtn.style.background = ''; // Reset color
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error(result.message || "Failed to send message");
+                }
+            } catch (error) {
+                console.error(error);
+                submitBtn.textContent = 'Error! Try Again';
+                submitBtn.style.background = '#dc3545'; // Red for error
+                setTimeout(() => {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.style.background = ''; // Reset color
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+        });
+    }
+
 });
