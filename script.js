@@ -97,12 +97,97 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hero Animations
     const tl = gsap.timeline();
 
+    // Helper to split text into chars
+    function splitTextToChars(selector) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+            const nodes = [...el.childNodes];
+            el.innerHTML = ''; // Clear content
+            el.style.opacity = 1; // Make container visible
+
+            nodes.forEach(node => {
+                if (node.nodeType === 3) { // Text node
+                    const letters = node.textContent.split('');
+                    letters.forEach(letter => {
+                        if (letter.trim() === '') {
+                            el.appendChild(document.createTextNode(' '));
+                        } else {
+                            const span = document.createElement('span');
+                            span.className = 'char';
+                            span.textContent = letter;
+                            el.appendChild(span);
+                        }
+                    });
+                } else if (node.nodeType === 1) { // Element node (e.g., .accent)
+                    const wrapper = document.createElement(node.tagName);
+                    Array.from(node.attributes).forEach(attr => wrapper.setAttribute(attr.name, attr.value));
+                    // Assuming simple text content inside
+                    const letters = node.textContent.split('');
+                    letters.forEach(letter => {
+                        if (letter.trim() === '') {
+                            wrapper.appendChild(document.createTextNode(' '));
+                        } else {
+                            const span = document.createElement('span');
+                            span.className = 'char';
+                            span.textContent = letter;
+                            wrapper.appendChild(span);
+                        }
+                    });
+                    el.appendChild(wrapper);
+                }
+            });
+        });
+    }
+
+    // Split Name and Title
+    splitTextToChars('.name');
+    splitTextToChars('.title');
+
+    // Hero Animations
+    // const tl = gsap.timeline(); // Already declared above
+
+
     tl.to(".greeting", { opacity: 1, y: 0, duration: 0.8, delay: 0.2 })
-        .to(".name", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-        .to(".title", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-        .to(".description", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to(".name .char", {
+            opacity: 1,
+            y: 0,
+            stagger: 0.05,
+            duration: 0.8,
+            ease: "back.out(1.7)"
+        }, "-=0.2")
+        .to(".title .char", {
+            opacity: 1,
+            y: 0,
+            stagger: 0.03,
+            duration: 0.8,
+            ease: "power2.out"
+        }, "-=0.4")
+        .to(".description", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
         .to(".cta-button", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
         .to(".scroll-down", { opacity: 1, duration: 1 }, "-=0.2");
+
+    // Add hover effect listeners to new chars (since they were created dynamically)
+    // The CSS :hover handles simplest cases, but for GSAP hover flair:
+    document.querySelectorAll('.char').forEach(char => {
+        char.addEventListener('mouseenter', () => {
+            gsap.to(char, {
+                scale: 1.3,
+                color: "#f107a3",
+                duration: 0.3,
+                y: -10,
+                ease: "power1.out"
+            });
+        });
+        char.addEventListener('mouseleave', () => {
+            gsap.to(char, {
+                scale: 1,
+                color: "inherit",
+                duration: 0.3,
+                y: 0,
+                ease: "power1.in"
+            });
+        });
+    });
 
     // Floating Shapes Animation
     gsap.to(".shape-1", {
