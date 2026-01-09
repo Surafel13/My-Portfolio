@@ -760,4 +760,38 @@ footer {
     body {
         cursor: auto;
     }
+
+    .hero {
+        padding: 0 20px;
+    }
+
+    .greeting {
+        font-size: 1.2rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .name {
+        font-size: 2.5rem;
+    }
+
+    .greeting {
+        font-size: 1rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
 }
