@@ -8,7 +8,7 @@ Designed to showcase projects, skills, and experience with a modern UI/UX.
 ## 🌐 Live Demo
 
 👉 **View Live Demo:**  
-https://modern-portfolio-template/
+[https://modern-portfolio-template/](https://my-portfolio-beta-ruddy-17.vercel.app/)
 
 ---
 
