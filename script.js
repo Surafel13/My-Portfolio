@@ -354,3 +354,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+function showProjectInstructions() {
+    alert(
+        "Sorry, the project is not deployed.\n\n" +
+        "To run it locally, follow these steps:\n" +
+        "1. Clone the project from GitHub.\n" +
+        "2. Add the .env file and configure the database connection.\n" +
+        "3. Run 'npm start' for the back end.\n" +
+        "4. Run 'npm run dev' for the front end."
+    );
+}
+
+document.getElementById('myLink').addEventListener('click', function (event) {
+    event.preventDefault();
+    showProjectInstructions();
+});
