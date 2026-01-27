@@ -1,35 +1,71 @@
-# Modern Portfolio Template
+# 🌟 Modern Portfolio Template
 
-A professional, responsive, and animated portfolio template built with HTML, CSS, and JavaScript (GSAP).
+A **professional, responsive, and animated portfolio website template** built with **HTML**, **CSS**, and **JavaScript**, featuring smooth animations powered by **GSAP**.  
+Designed to showcase projects, skills, and experience with a modern UI/UX.
 
-## Features
+---
 
-- **Modern UI/UX**: Dark mode, glassmorphism, and neon accents.
-- **GSAP Animations**: Smooth scroll triggers, text reveals, and timeline animations.
-- **Responsive**: Fully optimized for Desktop, Tablet, and Mobile.
-- **Custom Cursor**: Interactive cursor with hover effects.
-- **Ready to Deploy**: Clean code structure.
+## 🌐 Live Demo
 
-## How to Customize
+👉 **View Live Demo:**  
+[https://modern-portfolio-template/](https://my-portfolio-beta-ruddy-17.vercel.app/)
 
-1.  **Update Content**: Open `index.html` and replace the placeholder text with your real data (Name, Bio, Projects, Experience).
-2.  **Images**:
-    -   Replace the `src` attributes in `index.html` with your own images.
-    -   Currently using Picsum placeholders.
-3.  **Colors**:
-    -   Open `style.css` and modify the `:root` variables to change the color scheme.
-    -   `--accent-primary` and `--accent-secondary` control the gradients.
-4.  **Links**: Update the `href` attributes in the social links and project buttons.
+---
 
-## Technologies Used
+## ✨ Features
 
--   HTML5
--   CSS3 (Custom Properties, Flexbox, Grid)
--   JavaScript (ES6+)
--   GSAP (GreenSock Animation Platform)
--   FontAwesome (Icons)
--   Google Fonts (Outfit)
+- **Modern UI/UX**  
+  Dark mode design with glassmorphism effects and neon accents.
+- **GSAP Animations**  
+  Smooth scroll-triggered animations, text reveals, and timeline effects.
+- **Fully Responsive**  
+  Optimized for Desktop, Tablet, and Mobile devices.
+- **Custom Cursor**  
+  Interactive cursor with hover animations.
+- **Ready to Deploy**  
+  Clean, well-organized codebase with no build step required.
 
-## Running Locally
+---
 
-Simply open `index.html` in your browser. No build step required!
+## 🛠️ Technologies Used
+
+- **HTML5**
+- **CSS3** (Custom Properties, Flexbox, Grid)
+- **JavaScript (ES6+)**
+- **GSAP (GreenSock Animation Platform)**
+- **Font Awesome** (Icons)
+- **Google Fonts** (Outfit)
+
+---
+
+## 🎨 How to Customize
+
+### 1. Update Content
+Open `index.html` and replace the placeholder content with your own:
+- Name
+- Bio
+- Projects
+- Experience
+- Social links
+
+### 2. Images
+- Replace image `src` attributes in `index.html` with your own images.
+- The template currently uses **Picsum** placeholder images.
+
+### 3. Colors & Theme
+- Open `style.css`
+- Modify the `:root` CSS variables to customize colors:
+  - `--accent-primary`
+  - `--accent-secondary`
+
+### 4. Links
+- Update the `href` attributes for:
+  - Social media icons
+  - Project buttons
+  - Contact links
+
+---
+
+## ▶️ Running Locally
+
+1. Clone the repository:
