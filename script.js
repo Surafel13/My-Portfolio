@@ -1,356 +1,212 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* ==========================================================================
+   Portfolio – Surafel Tesfaye
+   Vanilla JS, no dependencies. Each feature is a small, independent function.
+   ========================================================================== */
+(() => {
+    'use strict';
 
-    // Register GSAP Plugins
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    const $ = (selector, scope = document) => scope.querySelector(selector);
+    const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-    // Theme Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
+    const root = document.documentElement;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Check for saved user preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
+    /* Theme --------------------------------------------------------------- */
+    function initTheme() {
+        const STORAGE_KEY = 'theme';
+        const toggle = $('#theme-toggle');
+        const metaTheme = $('meta[name="theme-color"]');
+        if (!toggle) return;
+
+        const read = () => {
+            try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+        };
+        const save = (value) => {
+            try { localStorage.setItem(STORAGE_KEY, value); } catch (e) { /* storage unavailable */ }
+        };
+
+        const apply = (theme) => {
+            root.setAttribute('data-theme', theme);
+            toggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+            if (metaTheme) metaTheme.setAttribute('content', theme === 'light' ? '#f7f7fa' : '#0c0d12');
+        };
+
+        apply(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+
+        toggle.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            apply(next);
+            save(next);
+        });
+
+        // Follow the system setting until the visitor chooses a theme themselves
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+            if (!read()) apply(event.matches ? 'light' : 'dark');
+        });
     }
 
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        if (body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            localStorage.setItem('theme', 'dark');
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
+    /* Header & mobile menu ------------------------------------------------ */
+    function initNavigation() {
+        const header = $('#site-header');
+        const toggle = $('#nav-toggle');
+        const list = $('#primary-nav');
+        if (!header || !toggle || !list) return;
+
+        const setOpen = (open) => {
+            list.classList.toggle('is-open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            document.body.classList.toggle('nav-open', open);
+        };
+
+        toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+
+        $$('a', list).forEach((link) => link.addEventListener('click', () => setOpen(false)));
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (toggle.getAttribute('aria-expanded') === 'true' && !header.contains(event.target)) setOpen(false);
+        });
+
+        window.matchMedia('(min-width: 861px)').addEventListener('change', (event) => {
+            if (event.matches) setOpen(false);
+        });
+
+        // Solid, blurred header once the page has been scrolled
+        let ticking = false;
+        const update = () => {
+            header.classList.toggle('is-scrolled', window.scrollY > 8);
+            ticking = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        }, { passive: true });
+        update();
+    }
+
+    /* Highlight the nav link of the section in view ----------------------- */
+    function initActiveLink() {
+        const links = $$('.nav-list a');
+        const sections = links
+            .map((link) => $(link.getAttribute('href')))
+            .filter(Boolean);
+        if (!sections.length || !('IntersectionObserver' in window)) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                links.forEach((link) => {
+                    const isCurrent = link.getAttribute('href') === `#${entry.target.id}`;
+                    link.classList.toggle('active', isCurrent);
+                    if (isCurrent) link.setAttribute('aria-current', 'location');
+                    else link.removeAttribute('aria-current');
+                });
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+
+        sections.forEach((section) => observer.observe(section));
+    }
+
+    /* Skill bars fill once, when the skills section is reached ------------ */
+    function initSkills() {
+        const skills = $('#skills-list');
+        if (!skills) return;
+
+        if (!('IntersectionObserver' in window) || prefersReducedMotion.matches) {
+            skills.classList.add('is-visible');
+            return;
         }
-    });
 
-    // Custom Cursor
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorOutline = document.querySelector(".cursor-outline");
-
-    window.addEventListener("mousemove", (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-
-        // Dot follows instantly
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
-
-        // Outline follows with lag which is handled by CSS transition, just update pos
-        // But for smoother GSAP feel:
-        gsap.to(cursorOutline, {
-            x: posX,
-            y: posY,
-            duration: 0.15,
-            ease: "power2.out"
-        });
-
-        // Also update dot with GSAP for consistency if mixed
-        gsap.to(cursorDot, {
-            x: posX,
-            y: posY,
-            duration: 0
-        });
-    });
-
-    // Cursor Hover Effects
-    const hoverables = document.querySelectorAll("a, button, .project-card, input, textarea");
-    hoverables.forEach(el => {
-        el.addEventListener("mouseenter", () => {
-            gsap.to(cursorOutline, {
-                scale: 1.5,
-                borderColor: "rgba(123, 47, 247, 0.5)",
-                backgroundColor: "rgba(123, 47, 247, 0.1)"
-            });
-        });
-        el.addEventListener("mouseleave", () => {
-            gsap.to(cursorOutline, {
-                scale: 1,
-                borderColor: "#ffffff",
-                backgroundColor: "transparent"
-            });
-        });
-    });
-
-    // Mobile Menu Toggle
-    const hamburger = document.querySelector(".hamburger");
-    const navLinks = document.querySelector(".nav-links");
-    const links = document.querySelectorAll(".nav-links li");
-
-    hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        hamburger.classList.toggle("active");
-    });
-
-    links.forEach(link => {
-        link.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-            hamburger.classList.remove("active");
-        });
-    });
-
-    // Hero Animations
-    const tl = gsap.timeline();
-
-    // Helper to split text into chars
-    function splitTextToChars(selector) {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-            const nodes = [...el.childNodes];
-            el.innerHTML = ''; // Clear content
-            el.style.opacity = 1; // Make container visible
-
-            nodes.forEach(node => {
-                if (node.nodeType === 3) { // Text node
-                    const letters = node.textContent.split('');
-                    letters.forEach(letter => {
-                        if (letter.trim() === '') {
-                            el.appendChild(document.createTextNode(' '));
-                        } else {
-                            const span = document.createElement('span');
-                            span.className = 'char';
-                            span.textContent = letter;
-                            el.appendChild(span);
-                        }
-                    });
-                } else if (node.nodeType === 1) { // Element node (e.g., .accent)
-                    const wrapper = document.createElement(node.tagName);
-                    Array.from(node.attributes).forEach(attr => wrapper.setAttribute(attr.name, attr.value));
-                    // Assuming simple text content inside
-                    const letters = node.textContent.split('');
-                    letters.forEach(letter => {
-                        if (letter.trim() === '') {
-                            wrapper.appendChild(document.createTextNode(' '));
-                        } else {
-                            const span = document.createElement('span');
-                            span.className = 'char';
-                            span.textContent = letter;
-                            wrapper.appendChild(span);
-                        }
-                    });
-                    el.appendChild(wrapper);
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
                 }
             });
-        });
+        }, { threshold: 0.25 });
+
+        observer.observe(skills);
     }
 
-    // Split Name and Title
-    splitTextToChars('.name');
-    splitTextToChars('.title');
+    /* Contact form -------------------------------------------------------- */
+    function initContactForm() {
+        const form = $('#contact-form');
+        if (!form) return;
 
-    // Hero Animations
-    // const tl = gsap.timeline(); // Already declared above
+        const button = $('#submit-btn', form);
+        const label = $('.btn-label', button);
+        const status = $('#form-status');
+        const endpoint = form.dataset.ajaxEndpoint;
+        const idleText = label.textContent;
 
+        const reset = (delay) => {
+            setTimeout(() => {
+                label.textContent = idleText;
+                button.removeAttribute('data-state');
+                button.disabled = false;
+            }, delay);
+        };
 
-    tl.to(".greeting", { opacity: 1, y: 0, duration: 0.8, delay: 0.2 })
-        .to(".name .char", {
-            opacity: 1,
-            y: 0,
-            stagger: 0.05,
-            duration: 0.8,
-            ease: "back.out(1.7)"
-        }, "-=0.2")
-        .to(".title .char", {
-            opacity: 1,
-            y: 0,
-            stagger: 0.03,
-            duration: 0.8,
-            ease: "power2.out"
-        }, "-=0.4")
-        .to(".description", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
-        .to(".cta-button", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-        .to(".scroll-down", { opacity: 1, duration: 1 }, "-=0.2");
+        const setStatus = (message, type) => {
+            status.textContent = message;
+            status.classList.remove('is-success', 'is-error');
+            if (type) status.classList.add(`is-${type}`);
+        };
 
-    // Add hover effect listeners to new chars (since they were created dynamically)
-    // The CSS :hover handles simplest cases, but for GSAP hover flair:
-    document.querySelectorAll('.char').forEach(char => {
-        char.addEventListener('mouseenter', () => {
-            gsap.to(char, {
-                scale: 1.3,
-                color: "#f107a3",
-                duration: 0.3,
-                y: -10,
-                ease: "power1.out"
-            });
-        });
-        char.addEventListener('mouseleave', () => {
-            gsap.to(char, {
-                scale: 1,
-                color: "inherit",
-                duration: 0.3,
-                y: 0,
-                ease: "power1.in"
-            });
-        });
-    });
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
 
-    // Floating Shapes Animation
-    gsap.to(".shape-1", {
-        x: 50,
-        y: 50,
-        duration: 10,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
-
-    gsap.to(".shape-2", {
-        x: -30,
-        y: -40,
-        duration: 8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-    });
-
-    // Scroll Animations
-
-    // About Section
-    gsap.from(".about-image", {
-        scrollTrigger: {
-            trigger: ".about",
-            start: "top 80%",
-        },
-        x: -50,
-        opacity: 0,
-        duration: 1
-    });
-
-    gsap.from(".about-text", {
-        scrollTrigger: {
-            trigger: ".about",
-            start: "top 80%",
-        },
-        x: 50,
-        opacity: 0,
-        duration: 1
-    });
-
-    // Skill Bars
-    gsap.utils.toArray(".progress").forEach(bar => {
-        gsap.to(bar, {
-            scrollTrigger: {
-                trigger: bar,
-                start: "top 90%",
-            },
-            width: bar.getAttribute("data-width"),
-            duration: 1.5,
-            ease: "power2.out"
-        });
-    });
-
-    // Projects Stagger
-    gsap.utils.toArray(".project-card").forEach((card, i) => {
-        gsap.to(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out"
-        });
-    });
-
-    // Experience Timeline
-    gsap.utils.toArray(".timeline-item").forEach((item, i) => {
-        gsap.to(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-            },
-            opacity: 1,
-            x: 0, // Reset any transform
-            duration: 0.8,
-            delay: i * 0.2
-        });
-    });
-
-    // Navigation Active Link on Scroll
-    const sections = document.querySelectorAll("header, section");
-    const navLi = document.querySelectorAll(".nav-links li a");
-
-    window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop - sectionHeight / 3) {
-                current = section.getAttribute("id");
-            }
-        });
-
-        navLi.forEach((li) => {
-            li.classList.remove("active");
-            if (li.getAttribute("href").includes(current)) {
-                li.classList.add("active");
-            }
-        });
-    });
-
-    // Smooth Scroll for Anchors
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === "#") return;
-            const target = document.querySelector(targetId);
-            if (target) {
-                gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 70 } });
-            }
-        });
-    });
-
-    // Contact Form Submission
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            const formData = new FormData(contactForm);
+            label.textContent = 'Sending...';
+            button.disabled = true;
+            setStatus('', null);
 
             try {
-                const response = await fetch("https://formsubmit.co/ajax/tesfayesurafel18@gmail.com", {
-                    method: "POST",
-                    body: formData
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' }
                 });
+                const result = await response.json().catch(() => ({}));
 
-                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Failed to send message');
 
-                if (response.ok) {
-                    submitBtn.textContent = 'Message Sent!';
-                    submitBtn.style.background = '#28a745'; // Green for success
-                    contactForm.reset();
-                    setTimeout(() => {
-                        submitBtn.textContent = originalBtnText;
-                        submitBtn.style.background = ''; // Reset color
-                        submitBtn.disabled = false;
-                    }, 3000);
-                } else {
-                    throw new Error(result.message || "Failed to send message");
-                }
+                label.textContent = 'Message Sent!';
+                button.dataset.state = 'success';
+                setStatus('Thanks for reaching out. Your message has been sent.', 'success');
+                form.reset();
+                reset(3000);
             } catch (error) {
                 console.error(error);
-                submitBtn.textContent = 'Error! Try Again';
-                submitBtn.style.background = '#dc3545'; // Red for error
-                setTimeout(() => {
-                    submitBtn.textContent = originalBtnText;
-                    submitBtn.style.background = ''; // Reset color
-                    submitBtn.disabled = false;
-                }, 3000);
+                label.textContent = 'Error! Try Again';
+                button.dataset.state = 'error';
+                setStatus('Your message could not be sent. Please try again or email me directly.', 'error');
+                reset(3000);
             }
         });
     }
 
-});
+    /* Footer year --------------------------------------------------------- */
+    function initYear() {
+        const year = $('#year');
+        if (year) year.textContent = new Date().getFullYear();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        initNavigation();
+        initActiveLink();
+        initSkills();
+        initContactForm();
+        initYear();
+    });
+})();

@@ -1,335 +1,466 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Full-Stack Web Developer</title>
+    <title>Surafel Tesfaye | Full-Stack Web Developer</title>
+    <meta name="description"
+        content="Portfolio of Surafel Tesfaye, a Full-Stack Web Developer in Addis Ababa, Ethiopia. Fast, accessible, responsive web apps built with React, Node.js, MongoDB and MySQL.">
+    <meta name="author" content="Surafel Tesfaye">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0c0d12">
+    <!-- TODO: once deployed, add <link rel="canonical" href="https://YOUR-DOMAIN/"> and an og:image / og:url -->
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Surafel Tesfaye | Full-Stack Web Developer">
+    <meta property="og:description"
+        content="Full-Stack Web Developer building fast, accessible and visually polished web applications.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Surafel Tesfaye | Full-Stack Web Developer">
+    <meta name="twitter:description"
+        content="Full-Stack Web Developer building fast, accessible and visually polished web applications.">
+
+    <!-- Apply saved / system theme before first paint (prevents a flash of the wrong theme) -->
+    <script>
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js');
+            var theme = 'dark';
+            try {
+                theme = localStorage.getItem('theme') ||
+                    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            } catch (e) { }
+            root.setAttribute('data-theme', theme);
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', theme === 'light' ? '#f7f7fa' : '#0c0d12');
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Surafel Tesfaye",
+        "jobTitle": "Full-Stack Web Developer",
+        "email": "mailto:tesfayesurafel18@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Addis Ababa", "addressCountry": "ET" },
+        "knowsAbout": ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB", "MySQL"],
+        "sameAs": [
+            "https://github.com/Surafel13",
+            "https://www.linkedin.com/in/surafel-tesfaye-621118359/",
+            "https://t.me/S13UR",
+            "https://www.instagram.com/sura_tes13/"
+        ]
+    }
+    </script>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Icon sprite: one definition, reused everywhere via <use> -->
+    <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+        <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
+        <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+        <symbol id="i-telegram" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+        <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+        <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></symbol>
+        <symbol id="i-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
+    </svg>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">My<span class="accent">Portfolio</span>.</div>
-        <ul class="nav-links">
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
-            <i class="fa-solid fa-moon"></i>
-        </button>
-        <div class="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </nav>
+    <header class="site-header" id="site-header">
+        <div class="container nav">
+            <a class="logo" href="#home" aria-label="MyPortfolio, back to top">My<span class="logo-accent">Portfolio</span>.</a>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+            <nav id="primary-nav" class="nav-list" aria-label="Primary">
+                <ul>
+                    <li><a href="#home" class="active" aria-current="location">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
 
-    <!-- Hero Section -->
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <h2 class="greeting">Hello, I'm</h2>
-            <h1 class="name">Surafel Tesfaye</h1>
-            <h3 class="title">Full-Stack Web Developer</h3>
-            <p class="description">I build exceptional digital experiences that are fast, accessible, and visually
-                stunning.</p>
-            <a href="#projects" class="cta-button">View My Work</a>
-        </div>
-        <div class="hero-visual">
-            <div class="floating-shape shape-1"></div>
-            <div class="floating-shape shape-2"></div>
-            <div class="floating-shape shape-3"></div>
-        </div>
-        <div class="scroll-down">
-            <i class="fa-solid fa-arrow-down"></i>
+            <div class="nav-actions">
+                <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
+                    <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
+                <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Open menu"
+                    aria-expanded="false" aria-controls="primary-nav">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container margin-top">
-            <h2 class="section-title">About <span class="accent">Me</span></h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="img-box">
-                        <img src="./assets/img1.jpg" alt="Profile Picture" id="profile-img">
+    <main id="main">
+
+        <!-- Hero -->
+        <section id="home" class="hero" aria-labelledby="hero-title">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to freelance and full-time positions</p>
+                    <p class="greeting">Hello, I'm</p>
+                    <h1 class="name" id="hero-title">
+                        <span class="line"><span>Surafel</span></span>
+                        <span class="line"><span>Tesfaye</span></span>
+                    </h1>
+                    <p class="role">Full-Stack Web Developer</p>
+                    <p class="lead">I build exceptional digital experiences that are fast, accessible, and visually stunning.</p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-ghost">Get In Touch</a>
                     </div>
                 </div>
-                <div class="about-text">
-                    <p>
-                        I am Surafel Tesfaye, a passionate Full-Stack Web Developer, and I love turning ideas into real
-                        web applications.I build websites that are responsive while keeping them visually engaging.
-                        With a strong foundation in both frontend and backend technologies, I turn complex
-                        problems into elegant solutions.
-                    </p>
-                    <div class="skills-container">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>HTML/CSS</span>
-                                <span>95%</span>
+
+                <aside class="work-index" aria-label="Featured projects">
+                    <p class="work-index-title">Featured Projects</p>
+                    <ul>
+                        <li>
+                            <a href="#project-clinic">
+                                <span class="wi-name">Clinic Appointment Web App</span>
+                                <span class="wi-tags">React.js, Node.js, MongoDB</span>
+                                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#project-chatbot">
+                                <span class="wi-name">Company ChatBot App</span>
+                                <span class="wi-tags">React.js, Tailwind.css, Node.js, MongoDB</span>
+                                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#project-amazon">
+                                <span class="wi-name">Amazon Clone</span>
+                                <span class="wi-tags">React.js, Bootstrap.css</span>
+                                <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+
+            <a class="scroll-down" href="#about" aria-label="Scroll to the About section">
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+            </a>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="section section-alt" aria-labelledby="about-title">
+            <div class="container">
+                <h2 class="section-title" id="about-title">About Me</h2>
+                <div class="about-grid">
+                    <figure class="about-photo">
+                        <img src="./assets/img1.jpg" alt="Portrait of Surafel Tesfaye" id="profile-img" width="400"
+                            height="500" loading="lazy" decoding="async">
+                    </figure>
+                    <div class="about-text">
+                        <p class="about-intro">
+                            I am Surafel Tesfaye, a passionate Full-Stack Web Developer, and I love turning ideas into
+                            real web applications. I build websites that are responsive while keeping them visually
+                            engaging. With a strong foundation in both frontend and backend technologies, I turn
+                            complex problems into elegant solutions.
+                        </p>
+                        <dl class="facts">
+                            <div>
+                                <dt>Location</dt>
+                                <dd>Addis Ababa, Ethiopia</dd>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="95%"></div>
+                            <div>
+                                <dt>Focus</dt>
+                                <dd>Full-stack web development</dd>
                             </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>JavaScript (ES6+)</span>
-                                <span>90%</span>
+                            <div>
+                                <dt>Availability</dt>
+                                <dd>Freelance and full-time</dd>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>React</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>Node.js</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>MONGO DB</span>
-                                <span>88%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>MySQL</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress" data-width="85%"></div>
-                            </div>
-                        </div>
+                        </dl>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
-            <div class="projects-grid">
-
-
-                <!-- Project Card 1 -->
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="./assets/image.png" alt="Project 3">
-                        <div class="overlay">
-                            <a href="https://github.com/Surafel13/Clinic-Appointment-Web-App" class="btn-icon"><i
-                                    class="fa-brands fa-github"></i></a>
-                            <a href="https://clinic-appointment-web-app.vercel.app/" class="btn-icon"><i
-                                    class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        </div>
+        <!-- Skills -->
+        <section id="skills" class="section" aria-labelledby="skills-title">
+            <div class="container">
+                <h2 class="section-title" id="skills-title">My Skills</h2>
+                <div class="skills" id="skills-list">
+                    <div class="skill-group">
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li class="skill" style="--w:95%">
+                                <div class="skill-info"><span>HTML/CSS</span><span>95%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="HTML/CSS proficiency"
+                                    aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                            <li class="skill" style="--w:90%">
+                                <div class="skill-info"><span>JavaScript (ES6+)</span><span>90%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="JavaScript proficiency"
+                                    aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                            <li class="skill" style="--w:85%">
+                                <div class="skill-info"><span>React</span><span>85%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="React proficiency"
+                                    aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="project-info">
-                        <h3>Clinic Appointment Web App</h3>
-                        <p>A responsive full-stack web application designed to manage clinic appointments
-                            efficiently. The system includes secure user authentication, appointment booking
-                            and management, and integrated calendar functionality for real-time scheduling.
-                            Built with strong attention to usability, accessibility, and clean UI/UX design.
-                        </p>
-                        <div class="tags">
-                            <span>React.js</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Card 2 -->
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="./assets/3-600x400.jpg" alt="Project 2">
-                        <div class="overlay">
-                            <a href="https://github.com/Surafel13/RAG-" class="btn-icon"><i
-                                    class="fa-brands fa-github"></i></a>
-                            <a href="https://rag-git-main-surafel13s-projects.vercel.app/" class="btn-icon"><i
-                                    class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Company ChatBot App</h3>
-                        <p>This full-stack web application features a modern landing page integrated with an AI chatbot.
-                            The chatbot uses a Retrieval-Augmented Generation (RAG) approach to provide accurate,
-                            company-specific answers.
-                            It retrieves information from the company’s internal knowledge base before generating
-                            responses.
-
-                        </p>
-                        <div class="tags">
-                            <span>React.js</span>
-                            <span>Tailwind.css</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                        </div>
+                    <div class="skill-group">
+                        <h3>Backend and data</h3>
+                        <ul>
+                            <li class="skill" style="--w:90%">
+                                <div class="skill-info"><span>Node.js</span><span>90%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="Node.js proficiency"
+                                    aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                            <li class="skill" style="--w:88%">
+                                <div class="skill-info"><span>MongoDB</span><span>88%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="MongoDB proficiency"
+                                    aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                            <li class="skill" style="--w:85%">
+                                <div class="skill-info"><span>MySQL</span><span>85%</span></div>
+                                <div class="skill-bar" role="progressbar" aria-label="MySQL proficiency"
+                                    aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-
-                <!-- Project Card 3 -->
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="./assets/amazon.png" alt="Project 1">
-                        <div class="overlay">
-                            <a href="https://github.com/Surafel13/Amazone-UI-Clone" class="btn-icon"
-                                title="View Code"><i class="fa-brands fa-github"></i></a>
-                            <a href="https://amazone-ui-clone-v29y.vercel.app/" class="btn-icon" title="Live Preview"><i
-                                    class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Amazon Clone</h3>
-                        <p>A web app replicating the Amazon home page interface.
-                            Showcases product sections, banners, and navigation layout.
-                            Focuses on pixel-perfect design and modern aesthetics.
-                            Highlights responsive layout for desktop and mobile views.
-                            Perfect for demonstrating front-end design and UI/UX skills.</p>
-                        <div class="tags">
-                            <span>React.js</span>
-                            <span>Bootstrap.css</span>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">My <span class="accent">Journey</span></h2>
-            <div class="timeline">
+        <!-- Projects -->
+        <section id="projects" class="section section-alt" aria-labelledby="projects-title">
+            <div class="container">
+                <h2 class="section-title" id="projects-title">Featured Projects</h2>
+                <div class="projects-grid">
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2025 - Present</div>
-                    <div class="timeline-content">
+                    <article class="project-card" id="project-clinic">
+                        <div class="project-media">
+                            <img src="./assets/image.png" alt="Screenshot of the Clinic Appointment Web App"
+                                width="600" height="400" loading="lazy" decoding="async">
+                        </div>
+                        <div class="project-body">
+                            <h3>Clinic Appointment Web App</h3>
+                            <p>A responsive full-stack web application designed to manage clinic appointments
+                                efficiently. The system includes secure user authentication, appointment booking and
+                                management, and integrated calendar functionality for real-time scheduling. Built with
+                                strong attention to usability, accessibility, and clean UI/UX design.</p>
+                            <ul class="tags" aria-label="Technologies used">
+                                <li>React.js</li>
+                                <li>Node.js</li>
+                                <li>MongoDB</li>
+                            </ul>
+                            <div class="project-actions">
+                                <a class="btn btn-primary btn-sm" href="https://clinic-appointment-web-app.vercel.app/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Live demo of Clinic Appointment Web App (opens in a new tab)">
+                                    Live Demo
+                                    <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+                                </a>
+                                <a class="btn btn-ghost btn-sm" href="https://github.com/Surafel13/Clinic-Appointment-Web-App"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Source code of Clinic Appointment Web App on GitHub (opens in a new tab)">
+                                    <svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card" id="project-chatbot">
+                        <div class="project-media">
+                            <img src="./assets/3-600x400.jpg" alt="Preview of the Company ChatBot App landing page"
+                                width="600" height="400" loading="lazy" decoding="async">
+                        </div>
+                        <div class="project-body">
+                            <h3>Company ChatBot App</h3>
+                            <p>This full-stack web application features a modern landing page integrated with an AI
+                                chatbot. The chatbot uses a Retrieval-Augmented Generation (RAG) approach to provide
+                                accurate, company-specific answers. It retrieves information from the company’s
+                                internal knowledge base before generating responses.</p>
+                            <ul class="tags" aria-label="Technologies used">
+                                <li>React.js</li>
+                                <li>Tailwind.css</li>
+                                <li>Node.js</li>
+                                <li>MongoDB</li>
+                            </ul>
+                            <div class="project-actions">
+                                <a class="btn btn-primary btn-sm" href="https://rag-git-main-surafel13s-projects.vercel.app/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Live demo of Company ChatBot App (opens in a new tab)">
+                                    Live Demo
+                                    <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+                                </a>
+                                <a class="btn btn-ghost btn-sm" href="https://github.com/Surafel13/RAG-"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Source code of Company ChatBot App on GitHub (opens in a new tab)">
+                                    <svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card" id="project-amazon">
+                        <div class="project-media">
+                            <img src="./assets/amazon.png" alt="Screenshot of the Amazon home page clone"
+                                width="600" height="400" loading="lazy" decoding="async">
+                        </div>
+                        <div class="project-body">
+                            <h3>Amazon Clone</h3>
+                            <p>A web app replicating the Amazon home page interface. Showcases product sections,
+                                banners, and navigation layout. Focuses on pixel-perfect design and modern aesthetics.
+                                Highlights responsive layout for desktop and mobile views. Perfect for demonstrating
+                                front-end design and UI/UX skills.</p>
+                            <ul class="tags" aria-label="Technologies used">
+                                <li>React.js</li>
+                                <li>Bootstrap.css</li>
+                            </ul>
+                            <div class="project-actions">
+                                <a class="btn btn-primary btn-sm" href="https://amazone-ui-clone-v29y.vercel.app/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Live demo of Amazon Clone (opens in a new tab)">
+                                    Live Demo
+                                    <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+                                </a>
+                                <a class="btn btn-ghost btn-sm" href="https://github.com/Surafel13/Amazone-UI-Clone"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="Source code of Amazon Clone on GitHub (opens in a new tab)">
+                                    <svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="section" aria-labelledby="experience-title">
+            <div class="container">
+                <h2 class="section-title" id="experience-title">My Journey</h2>
+                <ol class="timeline">
+                    <li class="timeline-item">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <p class="timeline-date">2025 - Present</p>
                         <h3>Junior Full Stack Web Developer</h3>
-                        <h4>Freelance / Personal Projects</h4>
-                        <p>Building and maintaining full-stack web applications using modern technologies.
-                            Developing responsive frontends, secure backend APIs, and managing databases
-                            with a strong focus on performance, usability, and clean code practices.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2024 - 2025</div>
-                    <div class="timeline-content">
+                        <p class="timeline-org">Freelance / Personal Projects</p>
+                        <p>Building and maintaining full-stack web applications using modern technologies. Developing
+                            responsive frontends, secure backend APIs, and managing databases with a strong focus on
+                            performance, usability, and clean code practices.</p>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <p class="timeline-date">2024 - 2025</p>
                         <h3>Frontend Developer</h3>
-                        <h4>Academic & Personal Projects</h4>
+                        <p class="timeline-org">Academic &amp; Personal Projects</p>
                         <p>Designed and implemented responsive user interfaces using modern JavaScript frameworks.
                             Focused on UI/UX principles, accessibility, and cross-browser compatibility.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2023 - 2024</div>
-                    <div class="timeline-content">
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <p class="timeline-date">2023 - 2024</p>
                         <h3>Web Development Learner</h3>
-                        <h4>Self-Learning & University Projects</h4>
-                        <p>Built foundational knowledge in HTML, CSS, JavaScript, backend development,
-                            and database management while completing multiple practical projects.</p>
-                    </div>
-                </div>
-
+                        <p class="timeline-org">Self-Learning &amp; University Projects</p>
+                        <p>Built foundational knowledge in HTML, CSS, JavaScript, backend development, and database
+                            management while completing multiple practical projects.</p>
+                    </li>
+                </ol>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- Contact -->
+        <section id="contact" class="section section-alt" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 class="section-title" id="contact-title">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Let's Talk</h3>
+                        <p>I'm open to freelance opportunities and full-time positions. Feel free to reach out using
+                            the form or through my social channels.</p>
+                        <ul class="contact-details">
+                            <li>
+                                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+                                <a href="mailto:tesfayesurafel18@gmail.com">tesfayesurafel18@gmail.com</a>
+                            </li>
+                            <li>
+                                <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+                                <span>Ethiopia, Addis Ababa</span>
+                            </li>
+                        </ul>
+                        <ul class="social-links" aria-label="Social profiles">
+                            <li><a class="icon-btn" href="https://github.com/Surafel13" target="_blank"
+                                    rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)"><svg class="icon"
+                                        aria-hidden="true"><use href="#i-github"></use></svg></a></li>
+                            <li><a class="icon-btn"
+                                    href="https://www.linkedin.com/in/surafel-tesfaye-621118359/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                    target="_blank" rel="noopener noreferrer"
+                                    aria-label="LinkedIn (opens in a new tab)"><svg class="icon" aria-hidden="true"><use
+                                            href="#i-linkedin"></use></svg></a></li>
+                            <li><a class="icon-btn" href="https://t.me/S13UR" target="_blank" rel="noopener noreferrer"
+                                    aria-label="Telegram (opens in a new tab)"><svg class="icon" aria-hidden="true"><use
+                                            href="#i-telegram"></use></svg></a></li>
+                            <li><a class="icon-btn" href="https://www.instagram.com/sura_tes13/" target="_blank"
+                                    rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)"><svg
+                                        class="icon" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+                        </ul>
+                    </div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <h3>Let's Talk</h3>
-                    <p>I'm open to freelance opportunities and full-time positions. Feel free to reach out using the
-                        form or through my social channels.</p>
-                    <div class="contact-details">
-                        <div class="item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span>tesfayesurafel18@gmail.com</span>
+                    <!-- Without JavaScript the form still posts to FormSubmit; with JavaScript it is sent in the background -->
+                    <form class="contact-form" id="contact-form" method="POST"
+                        action="https://formsubmit.co/tesfayesurafel18@gmail.com"
+                        data-ajax-endpoint="https://formsubmit.co/ajax/tesfayesurafel18@gmail.com">
+                        <input type="hidden" name="_subject" value="New message from your portfolio">
+                        <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required>
                         </div>
-                        <div class="item">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <span>Ethiopia, Addis Ababa</span>
+                        <div class="field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
                         </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://github.com/Surafel13"><i class="fa-brands fa-github"></i></a>
-                        <a
-                            href="https://www.linkedin.com/in/surafel-tesfaye-621118359/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
-                                class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="https://t.me/S13UR"><i class="fa-brands fa-telegram"></i></a>
-                        <a href="https://www.instagram.com/sura_tes13/"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
+                        <div class="field">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="How can I help?" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submit-btn"><span class="btn-label">Send Message</span></button>
+                        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+                    </form>
                 </div>
-                <form class="contact-form" id="contact-form">
-                    <div class="input-group">
-                        <input type="text" name="name" placeholder="Name" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" name="email" placeholder="Email" required>
-                    </div>
-                    <div class="input-group">
-                        <textarea name="message" placeholder="Message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="cta-button">Send Message</button>
-                </form>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Surafel Tesfaye. All Rights Reserved.</p>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; <span id="year">2025</span> Surafel Tesfaye. All Rights Reserved.</p>
+            <a href="#home">Back to top</a>
+        </div>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <script src="script.js"></script>
 </body>
 
 </html>
